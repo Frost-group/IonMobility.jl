@@ -27,7 +27,7 @@ Dₑff/D ∈ [0,1].
 function minimal_chakraborty_scpt(
     λκ::Float64;
     N::Int = 10,
-    T::Float64 = 10.0,
+    T::Float64 = 100.0,
     maxiter::Int = 200,
 )
 
@@ -78,8 +78,10 @@ function minimal_chakraborty_scpt(
             integrand(τ) = (1.0 - cos(Ω * τ)) * K(Σ(τ))
             # Integrate over τ ∈ [0, T/2] and use symmetry (avoids periodicity singularity at τ=T)
             I, _ = quadgk(integrand, 0.0, T/2, rtol = 1e-3)
-            # Eq (52): γₘ = λκ × 2∫...dτ (factor 2 from symmetry ?)
-            γ_new[m+1] = λκ * 2 * I
+            # Eq (52): γₘ = λκ × 2∫...dτ 
+            # I thoguht there was a factor of 2 from symmetry, but when I remove this I get
+            # agreement with the localisation collapse at disorder λκ=1.0
+            γ_new[m+1] = λκ * I
         end
 
         # Convergence check

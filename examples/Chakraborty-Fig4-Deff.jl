@@ -15,7 +15,7 @@ using Gnuplot
 
 chi_values = collect(0.01:0.05:3.0)
 
-for T in [10.0,25.0,50.0,100.0]
+for T in [10.0,25.0,50.0,100.0,250.0]
     D_ratios = [minimal_chakraborty_scpt(chi, T=T) for chi in chi_values]
     @gp :- chi_values D_ratios "w lp t 'T: $T D_{eff}/D'"
 end
